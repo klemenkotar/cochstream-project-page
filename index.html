@@ -142,6 +142,20 @@
             <b>B. CochStream Autoregressive Model Architecture:</b> The cochlear tokens obtained in WavCoch are passed to a GPT-style autoregressive Transformer <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">[4]</a>, denoted as CochStream. We train two versions: CochStream-base (97M parameters), with 12 layers, 12 attention heads and an embedding size of 784 and CochStream-large (1.3B parameters) with 24 layers, 16 attention heads, and an embedding size of 2,048. Both models have a vocabulary size of 16,384. The CochStream model takes as input the cochlear token sequence produced by WavCoch and predicts the next token in the sequence. The context length is approximately 20s (4,096 tokens). We utilize a learned positional embedding and compute the cross-entropy loss between the predicted logits and the true next token in the sequence.
         </p>
 
+        <br>
+        <br>
+        
+        <h3>
+        Figure 2
+        </h3>
+        <img src="assets/figures/WavCoch-cluster-purity-TIMIT.png">
+        <br>
+        <p>
+                The plot investigates the vocabulary utilization rate in relation to the phoneme purity of each token. For each token, we define the purity as:
+                Purity = (Count of most associated phoneme for token i) / (total counts for token i)
+                Hence, the purity (on Figure 2’s y-axis) shows the purity for each cochlear token, whereas the color shows how many times a given token appears in the test set.
+        </p>
+
     </div>
 
     
