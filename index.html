@@ -118,6 +118,32 @@
 
     </div>
 
+
+    <div class="container blog main first" id="blog-main" style="background-color: #E0E4E6;">
+        <h1 >
+            Rebuttal Figures
+        </h1>
+        <p class='text'>
+            We provide additional figures to address the reviewer comments.
+        </p>
+
+        <h3>
+        Figure 1
+        </h3>
+        <img src="assets/figures/architecture.png">
+        <br>
+        <p>
+            <b>A. WavCoch Quantizer Architecture:</b> First, the raw waveform (shape: [1,80000] for 5s of mono audio sampled at 16kHz) undergoes the Fourier Transform by computing Twiddle Factors <a href="https://www.semanticscholar.org/paper/An-algorithm-for-the-machine-calculation-of-complex-Cooley-Tukey/0e6beb95b5150ce99b108acdefabf70ccd3fee30">[1]</a>. These factors represent complex sinusoidal components that decompose the signal into its frequency spectrum. The Twiddle Factors are applied to the audio signal through a 1D convolution (window size 1,001 and hop length 80 samples) which transforms the signal into the time-frequency domain. 
+            Second, each 5 ms temporal step of this time-frequency representation is fed into two fully-connected (FC) layers with ReLU nonlinearities (with 512 hidden units each).
+            Third, these embeddings are then passed through a 14-dimensional LFQ bottleneck <a href="https://arxiv.org/abs/2310.05737">[3]</a>, which effectively binarizes the representation. We read out the activations of this bottleneck as a 14-bit binary code which can be interpreted as one of 2^14 = 16,384 discrete tokens.
+            Fourth, the output of the LFQ bottleneck is then projected to a 211 dimensional output, through two 1-dimensional convolutional layers (kernel size 10 and stride 1), separated by ReLU nonlinearities. This output corresponds to the frequencies in the cochleagram representation <a href="https://pubmed.ncbi.nlm.nih.gov/37845543/">[2]</a> which it is supervised to match via L2 error.
+            Thus for every 5 seconds of audio, WavCoch extracts a sequence of 988 integers in the range [0, 16384) through the LFQ bottleneck, denoted as \textbf{cochlear tokens}, to feed into CochStream.
+            <br>
+            <b>B. CochStream Autoregressive Model Architecture:</b> The cochlear tokens obtained in WavCoch are passed to a GPT-style autoregressive Transformer <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">[4]</a>, denoted as CochStream. We train two versions: CochStream-base (97M parameters), with 12 layers, 12 attention heads and an embedding size of 784 and CochStream-large (1.3B parameters) with 24 layers, 16 attention heads, and an embedding size of 2,048. Both models have a vocabulary size of 16,384. The CochStream model takes as input the cochlear token sequence produced by WavCoch and predicts the next token in the sequence. The context length is approximately 20s (4,096 tokens). We utilize a learned positional embedding and compute the cross-entropy loss between the predicted logits and the true next token in the sequence.
+        </p>
+
+    </div>
+
     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.18.1/highlight.min.js"></script>
