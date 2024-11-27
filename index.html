@@ -146,11 +146,30 @@
         <img src="assets/figures/WavCoch-cluster-purity-TIMIT.png">
         <br>
         <p>
-                The plot investigates the vocabulary utilization rate in relation to the phoneme purity of each token. For each token, we define the purity as:
-                Purity = (Count of most associated phoneme for token i) / (total counts for token i)
-                Hence, the purity (on Figure 2’s y-axis) shows the purity for each cochlear token, whereas the color shows how many times a given token appears in the test set.
+            The plot investigates the vocabulary utilization rate in relation to the phoneme purity of each token. For each token, we define the purity as:
+            Purity = (Count of most associated phoneme for token i) / (total counts for token i)
+            Hence, the purity (on Figure 2’s y-axis) shows the purity for each cochlear token, whereas the color shows how many times a given token appears in the test set.
         </p>
 
+        Figure 3
+        </h3>
+        <img src="assets/figures/waccoch_vocab_sizeplot.png">
+        <br>
+        <p>
+            We train variants of WavCoch using a vocabulary size of 16384, 8192 and 4096 
+            (14, 13 and 12 bit codes respectively) and report the reconstruction MSE and cluster
+            purity for each on the out of distribution TIMIT test set. The experiments 
+            indicate that a slightly smaller vocabulary size of 8192 is best for out of distrution generalization.
+        </p>
+        Figure 4
+        </h3>
+        <img src="assets/figures/QC3-librispeech960-8encstride38decstride9-aux001-vocab8192_model_best_heatmap.png">
+        <br>
+        <p>
+            We plot the cluster purity of the best version of WavCoch according to our ablation experiments. 
+            We find that multiple tokens are typically associated with each phoneme, and many of them are exclusively associated with a single phoenem. 
+            . Notably, a large number of tokens are linked to the "sil" (silence) label, but we would like to clarify that this label includes any non-speech sound, not true silence.
+        </p>
     </div>
 
 
