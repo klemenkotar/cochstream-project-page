@@ -140,6 +140,7 @@
             Thus for every 5 seconds of audio, WavCoch extracts a sequence of 988 integers in the range [0, 16384) through the LFQ bottleneck, denoted as \textbf{cochlear tokens}, to feed into CochStream.
             <br>
             <b>B. CochStream Autoregressive Model Architecture:</b> The cochlear tokens obtained in WavCoch are passed to a GPT-style autoregressive Transformer <a href="https://cdn.openai.com/research-covers/language-unsupervised/language_understanding_paper.pdf">[4]</a>, denoted as CochStream. We train two versions: CochStream-base (97M parameters), with 12 layers, 12 attention heads and an embedding size of 784 and CochStream-large (1.3B parameters) with 24 layers, 16 attention heads, and an embedding size of 2,048. Both models have a vocabulary size of 16,384. The CochStream model takes as input the cochlear token sequence produced by WavCoch and predicts the next token in the sequence. The context length is approximately 20s (4,096 tokens). We utilize a learned positional embedding and compute the cross-entropy loss between the predicted logits and the true ne\|||
+        
         <h3>
         Figure 2
         </h3>
@@ -151,6 +152,7 @@
             Hence, the purity (on Figure 2’s y-axis) shows the purity for each cochlear token, whereas the color shows how many times a given token appears in the test set.
         </p>
 
+        <h3>
         Figure 3
         </h3>
         <img src="assets/figures/waccoch_vocab_sizeplot.png">
@@ -161,6 +163,8 @@
             purity for each on the out of distribution TIMIT test set. The experiments 
             indicate that a slightly smaller vocabulary size of 8192 is best for out of distrution generalization.
         </p>
+
+        <h3></h3>
         Figure 4
         </h3>
         <img src="assets/figures/QC3-librispeech960-8encstride38decstride9-aux001-vocab8192_model_best_heatmap.png">
@@ -168,7 +172,7 @@
         <p>
             We plot the cluster purity of the best version of WavCoch according to our ablation experiments. 
             We find that multiple tokens are typically associated with each phoneme, and many of them are exclusively associated with a single phoenem. 
-            . Notably, a large number of tokens are linked to the "sil" (silence) label, but we would like to clarify that this label includes any non-speech sound, not true silence.
+            Notably, a large number of tokens are linked to the "sil" (silence) label, but we would like to clarify that this label includes any non-speech sound, not true silence.
         </p>
     </div>
 
